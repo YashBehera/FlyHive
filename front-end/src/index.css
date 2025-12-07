@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    margin: 0;
+    font-family: Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background-color: #F0F8FF; /* Light blue-gray bg, aviation-inspired */
+    color: #333;
+  }
+  
+  h1, h2, h3 { color: #003366; } /* Dark blue headers */
+  
+  button {
+    background-color: #00BFFF; /* Sky blue accents */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover { background-color: #0099CC; }
+  
+  .card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    max-width: 300px;
+  }
+  
+  .quote {
+    font-style: italic;
+    border-left: 4px solid #00BFFF;
+    padding-left: 15px;
+    margin: 20px 0;
+  }
+  
+  nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    background-color: #003366;
+    padding: 10px 0;
+    margin: 0;
+  }
+  
+  nav li { margin: 0 15px; }
+  
+  nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  footer {
+    background-color: #003366;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+  }
