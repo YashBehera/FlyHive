@@ -14,8 +14,6 @@ function App() {
   const sections = [
     { id: 'hero', name: 'Home' },
     { id: 'company', name: 'Company' },
-    { id: 'careers', name: 'Careers' },
-    { id: 'news', name: 'News' },
     { id: 'masterplan', name: 'Masterplan' }
   ];
 
@@ -26,8 +24,6 @@ function App() {
         <Hero />
         {activeSection === 'hero' || activeSection === 'product' ? <ProductSection /> : null}
         {activeSection === 'company' ? <CompanySection /> : null}
-        {activeSection === 'careers' ? <CareersSection /> : null}
-        {activeSection === 'news' ? <NewsSection /> : null}
         {activeSection === 'masterplan' ? <MasterplanSection /> : null}
       </main>
       <Footer />

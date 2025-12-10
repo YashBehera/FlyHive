@@ -52,7 +52,7 @@ const Header = ({ sections, activeSection, onNavClick, logo = "HIVE" }) => {
         {/* CTA Button */}
         <div className="header__actions">
           <button className="header__cta">
-            <span>Reserve Now</span>
+            <span>Contact Us</span>
             <svg 
               className="header__cta-arrow" 
               viewBox="0 0 24 24" 

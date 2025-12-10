@@ -107,58 +107,6 @@ const Footer = () => {
 
   return (
     <footer className="footer">
-      {/* Decorative Top Border */}
-      <div className="footer__border">
-        <div className="footer__border-line"></div>
-        <div className="footer__border-glow"></div>
-      </div>
-
-      {/* Newsletter Section */}
-      <div className="footer__newsletter">
-        <div className="footer__newsletter-container">
-          <div className="footer__newsletter-content">
-            <div className="footer__newsletter-text">
-              <h3 className="footer__newsletter-title">
-                Stay Ahead of the Future
-              </h3>
-              <p className="footer__newsletter-subtitle">
-                Get the latest updates on urban air mobility, product launches, and exclusive insights.
-              </p>
-            </div>
-            <form className="footer__newsletter-form" onSubmit={handleSubscribe}>
-              <div className="footer__input-wrapper">
-                <input
-                  type="email"
-                  className="footer__input"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-                <button type="submit" className="footer__submit">
-                  {isSubscribed ? (
-                    <span className="footer__submit-success">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                      </svg>
-                    </span>
-                  ) : (
-                    <>
-                      <span className="footer__submit-text">Subscribe</span>
-                      <svg className="footer__submit-arrow" viewBox="0 0 24 24" fill="none">
-                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </>
-                  )}
-                </button>
-              </div>
-              <p className="footer__newsletter-note">
-                By subscribing, you agree to our Privacy Policy. Unsubscribe anytime.
-              </p>
-            </form>
-          </div>
-        </div>
-      </div>
 
       {/* Main Footer Content */}
       <div className="footer__main">
