@@ -3,8 +3,6 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import ProductSection from './components/ProductSection';
 import CompanySection from './components/CompanySection';
-import CareersSection from './components/CareersSection.js';
-import NewsSection from './components/NewsSection';
 import MasterplanSection from './components/MasterPlanSection.js';
 import Footer from './components/Footer';
 

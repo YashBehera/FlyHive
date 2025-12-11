@@ -5,33 +5,6 @@ import CarbonFiber from './CarbonFibre.jpeg';
 import ProductHero from './VertiPort2.mp4';
 import VertiPort from './Vertiport.jpeg';
 
-// Custom hook for intersection observer
-const useIntersectionObserver = (options = {}) => {
-    const [isIntersecting, setIsIntersecting] = useState(false);
-    const [hasIntersected, setHasIntersected] = useState(false);
-    const ref = useRef(null);
-
-    useEffect(() => {
-        const element = ref.current;
-        if (!element) return;
-
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                setIsIntersecting(entry.isIntersecting);
-                if (entry.isIntersecting && !hasIntersected) {
-                    setHasIntersected(true);
-                }
-            },
-            { threshold: 0.1, rootMargin: '0px 0px -80px 0px', ...options }
-        );
-
-        observer.observe(element);
-        return () => observer.disconnect();
-    }, [hasIntersected, options]);
-
-    return [ref, isIntersecting, hasIntersected];
-};
-
 // Custom hook for smooth counter animation
 const useCountUp = (end, duration = 2000, start = 0, isActive = false) => {
     const [count, setCount] = useState(start);

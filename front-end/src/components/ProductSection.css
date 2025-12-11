@@ -514,11 +514,14 @@ textarea {
   position: absolute;
   inset: 0;
   z-index: 1;
+  overflow: hidden;
 }
 
 .hero__video-container {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   opacity: 0;
   transform: scale(1.1);
   transition:
@@ -533,14 +536,12 @@ textarea {
 
 .hero__video {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  object-position: center center;
 }
 
 /* Loading State */
@@ -578,13 +579,132 @@ textarea {
   text-transform: uppercase;
 }
 
-/* Error Fallback */
 .hero__fallback {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   background-size: cover;
-  background-position: center;
+  background-position: center center;
   background-repeat: no-repeat;
+}
+
+@media (max-width: 768px) {
+  .hero__media {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero__video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: none; /* Remove scale on mobile for better performance */
+  }
+
+  .hero__video-container--loaded {
+    transform: none;
+  }
+
+  .hero__video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    /* Force GPU acceleration */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+
+  /* Adjust overlay gradient for mobile to ensure content visibility */
+  .hero__overlay--gradient {
+    background: linear-gradient(180deg,
+        rgba(29, 29, 31, 0.5) 0%,
+        rgba(29, 29, 31, 0.3) 30%,
+        rgba(29, 29, 31, 0.4) 60%,
+        rgba(29, 29, 31, 0.97) 100%);
+  }
+}
+
+/* ==================== SMALL MOBILE VIDEO FIXES ==================== */
+@media (max-width: 480px) {
+  .hero__video {
+    /* For very small screens, prioritize height coverage */
+    object-position: center center;
+  }
+
+  /* Stronger overlay on small screens for readability */
+  .hero__overlay--gradient {
+    background: linear-gradient(180deg,
+        rgba(29, 29, 31, 0.6) 0%,
+        rgba(29, 29, 31, 0.35) 30%,
+        rgba(29, 29, 31, 0.45) 60%,
+        rgba(29, 29, 31, 0.98) 100%);
+  }
+}
+
+/* ==================== iOS SPECIFIC FIXES ==================== */
+/* iOS Safari has issues with video backgrounds */
+@supports (-webkit-touch-callout: none) {
+  .hero__video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* iOS fix for video sizing */
+    min-width: 100%;
+    min-height: 100%;
+  }
+
+  .hero__video-container {
+    /* Disable transform on iOS to prevent rendering issues */
+    transform: none !important;
+  }
+}
+
+/* ==================== LANDSCAPE MOBILE VIDEO FIXES ==================== */
+@media (max-height: 600px) and (orientation: landscape) {
+  .hero__video {
+    object-position: center center;
+  }
+}
+
+/* ==================== ASPECT RATIO HANDLING ==================== */
+/* For videos with specific aspect ratios that might not cover well */
+@media (max-aspect-ratio: 9/16) {
+  /* Very tall/narrow screens (most phones in portrait) */
+  .hero__video {
+    width: auto;
+    height: 100%;
+    min-width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media (min-aspect-ratio: 16/9) {
+  /* Very wide screens */
+  .hero__video {
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
 
 /* ==================== OVERLAYS ==================== */
@@ -693,7 +813,7 @@ textarea {
   padding: var(--space-32) var(--container-padding) var(--space-40);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   min-height: 100vh;
   min-height: 100dvh;
 }
@@ -1299,7 +1419,7 @@ textarea {
   .hero__wrapper {
     padding: var(--space-24) var(--container-padding) var(--space-48);
     justify-content: flex-start;
-    padding-top: 25vh;
+    padding-top: 5vh;
   }
 
   .hero__eyebrow {
@@ -1387,7 +1507,7 @@ textarea {
 /* ==================== RESPONSIVE - SMALL MOBILE ==================== */
 @media (max-width: 480px) {
   .hero__wrapper {
-    padding-top: 20vh;
+    padding-top: 5vh;
   }
 
   .hero__headline-word {

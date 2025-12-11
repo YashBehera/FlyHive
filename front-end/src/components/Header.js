@@ -10,7 +10,6 @@ const Header = ({
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null);
   const headerRef = useRef(null);
 
   // Handle scroll
@@ -46,7 +45,6 @@ const Header = ({
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
         setIsMobileMenuOpen(false);
-        setActiveDropdown(null);
       }
     };
     document.addEventListener('keydown', handleKeyDown);
@@ -67,12 +65,22 @@ const Header = ({
   const handleNavClick = useCallback((sectionId) => {
     onNavClick(sectionId);
     setIsMobileMenuOpen(false);
-    setActiveDropdown(null);
   }, [onNavClick]);
 
   const toggleMobileMenu = useCallback(() => {
     setIsMobileMenuOpen(prev => !prev);
   }, []);
+
+  // Logo Component
+  const Logo = ({ className = '' }) => (
+    <div className={`nav__logo ${className}`}>
+      <span className="nav__logo-text">
+        <span className="nav__logo-hi">hi</span>
+        <span className="nav__logo-ve">ve</span>
+        <span className="nav__logo-plus">+</span>
+      </span>
+    </div>
+  );
 
   return (
     <>
@@ -85,33 +93,24 @@ const Header = ({
           <a 
             href="/" 
             className="nav__brand"
+            aria-label="Hive Plus - Home"
             onClick={(e) => {
               e.preventDefault();
               handleNavClick('home');
             }}
           >
-            <div className="nav__logo">
-              <span className="nav__logo-icon">
-                <svg viewBox="0 0 40 40" fill="none">
-                  <path d="M20 4L36 12V28L20 36L4 28V12L20 4Z" fill="currentColor" fillOpacity="0.1" stroke="currentColor" strokeWidth="2"/>
-                  <path d="M20 12L28 16V24L20 28L12 24V16L20 12Z" fill="currentColor"/>
-                </svg>
-              </span>
-              <span className="nav__logo-text">
-                <span className="nav__logo-primary">Hive</span>
-                <span className="nav__logo-accent">+</span>
-              </span>
-            </div>
+            <Logo />
           </a>
 
           {/* Center Navigation */}
-          <nav className="nav__menu">
+          <nav className="nav__menu" aria-label="Main navigation">
             <ul className="nav__list">
-              {sections.map((section, index) => (
+              {sections.map((section) => (
                 <li key={section.id} className="nav__item">
                   <button
                     className={`nav__link ${activeSection === section.id ? 'nav__link--active' : ''}`}
                     onClick={() => handleNavClick(section.id)}
+                    aria-current={activeSection === section.id ? 'page' : undefined}
                   >
                     {section.name}
                   </button>
@@ -139,6 +138,7 @@ const Header = ({
               onClick={toggleMobileMenu}
               aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu"
             >
               <div className="nav__toggle-box">
                 <span className="nav__toggle-line"></span>
@@ -158,25 +158,19 @@ const Header = ({
       <div 
         className={`nav-overlay ${isMobileMenuOpen ? 'nav-overlay--visible' : ''}`}
         onClick={() => setIsMobileMenuOpen(false)}
+        aria-hidden="true"
       />
 
       {/* Mobile Menu */}
-      <aside className={`nav-mobile ${isMobileMenuOpen ? 'nav-mobile--open' : ''}`}>
+      <aside 
+        id="mobile-menu"
+        className={`nav-mobile ${isMobileMenuOpen ? 'nav-mobile--open' : ''}`}
+        aria-label="Mobile navigation"
+      >
         <div className="nav-mobile__container">
           {/* Mobile Header */}
           <div className="nav-mobile__header">
-            <div className="nav__logo">
-              <span className="nav__logo-icon">
-                <svg viewBox="0 0 40 40" fill="none">
-                  <path d="M20 4L36 12V28L20 36L4 28V12L20 4Z" fill="currentColor" fillOpacity="0.1" stroke="currentColor" strokeWidth="2"/>
-                  <path d="M20 12L28 16V24L20 28L12 24V16L20 12Z" fill="currentColor"/>
-                </svg>
-              </span>
-              <span className="nav__logo-text">
-                <span className="nav__logo-primary">Hive</span>
-                <span className="nav__logo-accent">+</span>
-              </span>
-            </div>
+            <Logo className="nav__logo--mobile" />
             <button 
               className="nav-mobile__close"
               onClick={() => setIsMobileMenuOpen(false)}
@@ -200,6 +194,7 @@ const Header = ({
                   <button
                     className={`nav-mobile__link ${activeSection === section.id ? 'nav-mobile__link--active' : ''}`}
                     onClick={() => handleNavClick(section.id)}
+                    aria-current={activeSection === section.id ? 'page' : undefined}
                   >
                     <span className="nav-mobile__link-index">{String(index + 1).padStart(2, '0')}</span>
                     <span className="nav-mobile__link-text">{section.name}</span>
@@ -216,7 +211,10 @@ const Header = ({
 
           {/* Mobile Footer */}
           <div className="nav-mobile__footer">
-            <button className="nav-mobile__cta" onClick={onCtaClick}>
+            <button className="nav-mobile__cta" onClick={() => {
+              onCtaClick();
+              setIsMobileMenuOpen(false);
+            }}>
               <span>{ctaText}</span>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -226,7 +224,7 @@ const Header = ({
             <div className="nav-mobile__info">
               <div className="nav-mobile__contact">
                 <span className="nav-mobile__label">Contact</span>
-                <a href="mailto:hello@hive.com" className="nav-mobile__value">hello@hive.com</a>
+                <a href="mailto:hello@hiveplus.in" className="nav-mobile__value">hello@hiveplus.in</a>
               </div>
               <div className="nav-mobile__social">
                 <a href="#" className="nav-mobile__social-link" aria-label="Twitter">
